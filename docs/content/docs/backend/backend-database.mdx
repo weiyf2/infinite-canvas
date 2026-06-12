@@ -23,6 +23,7 @@ description: 当前后端主要数据表与字段说明
 - `credit_logs`
 - `prompts`
 - `assets`
+- `announcements`
 - `settings`
 
 后续新增表时再同步补充本文档，未实际使用的规划表不提前写入。
@@ -86,6 +87,24 @@ description: 当前后端主要数据表与字段说明
 | `description` | string | 描述 |
 | `content` | text | 文本或 Markdown 内容 |
 | `url` | string | 图片、视频等媒体地址 |
+| `created_at` | string | 创建时间 |
+| `updated_at` | string | 更新时间 |
+
+### announcements
+
+公告表。用于管理后台维护站内公告，并给前台读取当前可展示的进站弹窗公告。
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `id` | string | 主键 |
+| `title` | string | 公告标题 |
+| `content` | text | 公告内容，按纯文本和换行展示 |
+| `enabled` | bool | 是否启用 |
+| `priority` | number | 展示优先级，越大越靠前 |
+| `start_at` | string | 开始展示时间，可为空 |
+| `end_at` | string | 结束展示时间，可为空 |
+| `button_text` | string | 弹窗按钮文案，可为空 |
+| `button_url` | string | 弹窗按钮链接，可为空 |
 | `created_at` | string | 创建时间 |
 | `updated_at` | string | 更新时间 |
 

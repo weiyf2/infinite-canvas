@@ -43,6 +43,7 @@ func New() *gin.Engine {
 	})
 	api.GET("/prompts", middleware.OptionalAuth, gin.WrapF(handler.Prompts))
 	api.GET("/assets", middleware.OptionalAuth, gin.WrapF(handler.Assets))
+	api.GET("/announcements/active", gin.WrapF(handler.AnnouncementActive))
 	api.POST("/admin/login", gin.WrapF(handler.AdminLogin))
 
 	admin := api.Group("/admin", middleware.AdminAuth)
@@ -75,6 +76,11 @@ func New() *gin.Engine {
 	admin.POST("/assets", gin.WrapF(handler.AdminSaveAsset))
 	admin.DELETE("/assets/:id", func(c *gin.Context) {
 		handler.AdminDeleteAsset(c.Writer, c.Request, c.Param("id"))
+	})
+	admin.GET("/announcements", gin.WrapF(handler.AdminAnnouncements))
+	admin.POST("/announcements", gin.WrapF(handler.AdminSaveAnnouncement))
+	admin.DELETE("/announcements/:id", func(c *gin.Context) {
+		handler.AdminDeleteAnnouncement(c.Writer, c.Request, c.Param("id"))
 	})
 
 	router.NoRoute(middleware.NotFoundJSON)

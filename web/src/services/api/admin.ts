@@ -114,9 +114,28 @@ export type AdminAsset = {
     updatedAt: string;
 };
 
+export type AdminAnnouncement = {
+    id: string;
+    title: string;
+    content: string;
+    enabled: boolean;
+    priority: number;
+    startAt: string;
+    endAt: string;
+    buttonText: string;
+    buttonUrl: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
 export type AdminAssetListResponse = {
     items: AdminAsset[];
     tags: string[];
+    total: number;
+};
+
+export type AdminAnnouncementListResponse = {
+    items: AdminAnnouncement[];
     total: number;
 };
 
@@ -144,6 +163,13 @@ export type AdminAssetQuery = {
     pageSize?: number;
 };
 
+export type AdminAnnouncementQuery = {
+    keyword?: string;
+    type?: string;
+    page?: number;
+    pageSize?: number;
+};
+
 export async function fetchAdminAssets(token: string, query: AdminAssetQuery = {}) {
     return apiGet<AdminAssetListResponse>("/api/admin/assets", compactApiParams(query), token);
 }
@@ -154,6 +180,18 @@ export async function saveAdminAsset(token: string, asset: Partial<AdminAsset>) 
 
 export async function deleteAdminAsset(token: string, id: string) {
     return apiDelete<boolean>(`/api/admin/assets/${encodeURIComponent(id)}`, token);
+}
+
+export async function fetchAdminAnnouncements(token: string, query: AdminAnnouncementQuery = {}) {
+    return apiGet<AdminAnnouncementListResponse>("/api/admin/announcements", compactApiParams(query), token);
+}
+
+export async function saveAdminAnnouncement(token: string, announcement: Partial<AdminAnnouncement>) {
+    return apiPost<AdminAnnouncement>("/api/admin/announcements", announcement, token);
+}
+
+export async function deleteAdminAnnouncement(token: string, id: string) {
+    return apiDelete<boolean>(`/api/admin/announcements/${encodeURIComponent(id)}`, token);
 }
 
 export type AdminModelChannel = {
